@@ -1,271 +1,197 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FINSMARTIFY</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
-  <link rel="stylesheet" href="general.css">
-</head>
-<body>
-   <div class="container">
-      <aside>
+console.log('Script.js loaded successfully');
 
-         <div class="top">
-           <div class="logo">
-             <h2> <span class="danger"> FINSMARTIFY</span> </h2>
-           </div>
-           <div class="close" id="close_btn">
-            <span class="material-symbols-sharp">
-              close
-              </span>
-           </div>
-         </div>
-         <!-- end top -->
-          <div class="sidebar">
+let expenses = [];
+let totalAmount = 0;
+let totalBudget = 0; // Initialize total budget to zero
 
-            <a href="#" class="active">
-              <span class="material-symbols-sharp">grid_view </span>
-              <h3>Dashbord</h3>
-           </a>
-           <a href="#">
-              <span class="material-symbols-sharp">insights </span>
-              <h3>Analytics</h3>
-           </a>
-           <a href="#">
-              <span class="material-symbols-sharp">report_gmailerrorred </span>
-              <h3>Reports</h3>
-           </a>
-           <a href="#">
-              <span class="material-symbols-sharp">logout </span>
-              <h3>logout</h3>
-           </a>
+const categorySelect = document.getElementById('category-select');
+const amountInput = document.getElementById('amount-input');
+const dateInput = document.getElementById('date-input');
+const addBtn = document.getElementById('add-btn');
+const expensesTableBody = document.getElementById('expnese-table-body');
+const totalAmountCell = document.getElementById('total-amount');
+const budgetInput = document.getElementById('budgetInput');
+const totalBudgetDisplay = document.getElementById('totalBudget');
+const progressPercentageDisplay = document.getElementById('progressPercentage');
+const budgetAddBtn = document.getElementById('budgetAddBtn');
+const sideMenu = document.querySelector('aside');
+const menuBtn = document.querySelector('#menu_bar');
+const closeBtn = document.querySelector('#close_btn');
+const themeToggler = document.querySelector('.theme-toggler');
 
+// graph code start
+const ctx = document.getElementById('myChart');
 
+var myChart=new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June','July','August','September','October','November','December'],
+    datasets: [{
+      label: 'expenses',
+      data: [1200, 31900, 35000, 161115, 666002, 334093,22000,43456,51487,12340,4356,9867.8],
+      borderWidth: 1
 
-          </div>
+    },
+    {
+        label: 'savings',
+        data: [123300, 222900, 34400, 41115, 605502, 8093,26400,24563,5187,234550,443556,23867.8],
+        borderWidth: 1
 
-      </aside>
-      <!-- --------------
-        end asid
-      -------------------- -->
+      },],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
 
-      <!-- --------------
-        start main part
-      --------------- -->
+  
+// graph code end
 
-      <main>
-           <h1>Dashbord</h1>
+//notificatications
+function showNotification(message) {
+  const notificationContainer = document.getElementById('notification-container');
 
-        <div class="current-date">
-            <p id="current-date"></p>
-        </div>
+  // Create notification element
+  const notification = document.createElement('div');
+  notification.classList.add('notification');
+  notification.innerHTML = `
+    <p>${message}</p>
+    <button onclick="hideNotification(this)">Close</button>
+  `;
 
+  // Add notification to the container
+  notificationContainer.appendChild(notification);
 
-        <div class="insights">
+  // Show notification
+  notification.style.display = 'block';
+}
 
-           <!-- start seling -->
-          <div class="sales">
-              <span class="material-symbols-sharp">trending_up</span>
-              <div class="middle">
-                  <div class="left">
-                      <h3>Total Expenses</h3>
-                      <h1 id="total-expenses">$0</h1> <!-- Placeholder for total expenses -->
-                  </div>
-                  <div class="progress">
-                      <svg>
-                          <circle  r="30" cy="40" cx="40"></circle>
-                      </svg>
-                      <div class="number"><p>80%</p></div>
-                  </div>
-              </div>
-              <!-- <small>last 24 hour </small> -->
-          </div>
-           <!-- end seling -->
-              <!-- start expenses -->
-              <div class="expenses">
-                <span class="material-symbols-sharp">local_mall</span>
-                <div class="middle">
+// Function to hide notification
+function hideNotification(button) {
+  const notification = button.parentNode;
+  if (notification) {
+    notification.style.display = 'none';
+  }
+}
 
-                  <div class="left">
-                    <h3>Total Saving</h3>
-                    <h1>$25,024</h1>
-                  </div>
-                   <div class="progress">
-                       <svg>
-                          <circle  r="30" cy="40" cx="40"></circle>
-                       </svg>
-                       <div class="number"><p>80%</p></div>
-                   </div>
+// Show bill payment reminder notification
+showNotification("Reminder: You have an upcoming bill payment due tomorrow.");
 
-                </div>
-                <small>Last 24 Hours</small>
-             </div>
-            <!-- end seling -->
-               <!-- start seling -->
-               <div class="income">
-                <span class="material-symbols-sharp">stacked_line_chart</span>
-                <div class="middle">
+//notifaction code ends here
 
-                  <div class="left">
-                    <h3>Total budget</h3>
-                    <h1>$25,024</h1>
-                  </div>
-                   <div class="progress">
-                       <svg>
-                          <circle  r="30" cy="40" cx="40"></circle>
-                       </svg>
-                       <div class="number"><p>80%</p></div>
-                   </div>
+menuBtn.addEventListener('click', () => {
+    sideMenu.style.display = "block";
+});
 
-                </div>
-                <small>Last 24 Hours</small>
-             </div>
-            <!-- end seling -->
+closeBtn.addEventListener('click', () => {
+    sideMenu.style.display = "none";
+});
 
-        </div>
-       <!-- end insights -->
-      <div class="recent_order">
-        <body>
-        <h2>Expense Tracker</h2>
-        <div class="input-section">
-            <label for="category-select">Category:</label>
-            <select id="category-select">
-                <option value="Food & Beverage">Food & Beverage</option>
-                <option value="Rent">Rent</option>
-                <option value="Transport">Transport</option>
-                <option value="Relaxing">Relaxing</option>
-            </select>
-            <label for="amount-input">Amount:</label>
-            <input type="number" id="amount-input">
-            <label for="date-input">Date:</label>
-            <input type="date" id="date-input">
-            <button id="add-btn">Add</button>
-        </div>
-        <div class="expenses-list">
-            <h2>Expenses List</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Delete</th>
-                    </tr>
-                </thead>
-                <tbody id="expnese-table-body">
+themeToggler.addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme-variables');
+    themeToggler.querySelector('span:nth-child(1)').classList.toggle('active');
+    themeToggler.querySelector('span:nth-child(2)').classList.toggle('active');
+});
 
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td>Total:</td>
-                        <td id="total-amount"></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-      </div>
-        <div class="graph">
-            <h2>Expenses and Saving (last 12 months)</h2>
-            <canvas  id="myChart"  ></canvas>
-        </div>
+addBtn.addEventListener('click', function() {
+    const category = categorySelect.value;
+    const amount = Number(amountInput.value);
+    const date = dateInput.value;
 
-      </main>
-      <!------------------
-         end main
-        ------------------->
+    if (category === '') {
+        alert('Please select a category');
+        return;
+    }
+    if (isNaN(amount) || amount <= 0) {
+        alert('Please enter a valid amount');
+        return;
+    }
+    if (date === '') {
+        alert('Please select a date');
+        return;
+    }
+    expenses.push({category, amount, date});
 
-      <!----------------
-        start right main 
-      ---------------------->
-    <div class="right">
+    totalAmount += amount;
+    totalAmountCell.textContent = totalAmount;
+    document.getElementById('total-expenses').textContent = '$' + totalAmount.toFixed(2);
 
-<div class="top">
-   <button id="menu_bar">
-     <span class="material-symbols-sharp">menu</span>
-   </button>
+    const newRow = expensesTableBody.insertRow();
 
-   <div class="theme-toggler">
-     <span class="material-symbols-sharp active">light_mode</span>
-     <span class="material-symbols-sharp">dark_mode</span>
-   </div>
-    <div class="profile">
-       <div class="info">
-           <p><b>Name</b></p>
-           <p>User</p>
-           <small class="text-muted"></small>
-       </div>
-       <div class="profile-photo">
-         <img src="static/profile.jpg" alt=""/>
-       </div>
-    </div>
-</div>
+    const categoryCell = newRow.insertCell();
+    const amountCell = newRow.insertCell();
+    const dateCell = newRow.insertCell();
+    const deleteCell = newRow.insertCell();
+    const deleteBtn = document.createElement('button');
 
-  <div class="recent_updates">
-     <h2>Goal Progress</h2>
-   <div class="updates">
-      <div class="update">
-         
-   </div>
-   </div>
-  </div>
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.addEventListener('click', function() {
+        expenses.splice(expenses.indexOf(expense), 1);
+
+        totalAmount -= expense.amount;
+        totalAmountCell.textContent = totalAmount;
+        document.getElementById('total-expenses').textContent = '$' + totalAmount.toFixed(2);
+
+        expensesTableBody.removeChild(newRow);
+    });
+
+    const expense = expenses[expenses.length - 1];
+    categoryCell.textContent = expense.category;
+    amountCell.textContent = expense.amount;
+    dateCell.textContent = expense.date;
+    deleteCell.appendChild(deleteBtn);
+});
+
+// Function to update the current date
+function updateCurrentDate() {
+    const currentDate = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const formattedDate = currentDate.toLocaleDateString('en-IN', options); // 'en-IN' for English (India)
+    document.getElementById('current-date').textContent = formattedDate;
+}
+
+// Call the function to initially set the current date
+updateCurrentDate();
+
+// Update the current date every second (optional)
+setInterval(updateCurrentDate, 1000);
 
 
-   <div class="sales-analytics">
-     <h2>Sales Analytics</h2>
 
-      <div class="item onlion">
-        <div class="icon">
-          <span class="material-symbols-sharp">shopping_cart</span>
-        </div>
-        <div class="right_text">
-          <div class="info">
-            <h3></h3>
-            <small class="text-muted">Last seen 2 Hours</small>
-          </div>
-          <h5 class="danger">-17%</h5>
-          <h3>3849</h3>
-        </div>
-      </div>
-      <div class="item onlion">
-        <div class="icon">
-          <span class="material-symbols-sharp">shopping_cart</span>
-        </div>
-        <div class="right_text">
-          <div class="info">
-            <h3>Onlion Orders</h3>
-            <small class="text-muted">Last seen 2 Hours</small>
-          </div>
-          <h5 class="success">-17%</h5>
-          <h3>3849</h3>
-        </div>
-      </div>
-      <div class="item onlion">
-        <div class="icon">
-          <span class="material-symbols-sharp">shopping_cart</span>
-        </div>
-        <div class="right_text">
-          <div class="info">
-            <h3>Onlion Orders</h3>
-            <small class="text-muted">Last seen 2 Hours</small>
-          </div>
-          <h5 class="danger">-17%</h5>
-          <h3>3849</h3>
-        </div>
-      </div>
-</div>
+budgetAddBtn.addEventListener('click', function() {
+    const budget = parseFloat(budgetInput.value);
 
-      <div class="item add_product">
-            <div>
-            <span class="material-symbols-sharp">add</span>
-            </div>
-     </div>
-</div>
-</div>   
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="chart.js"></script>
-</body>
-</html>
+    if (!isNaN(budget) && budget >= 0) {
+        // Update total budget
+        totalBudgetDisplay.textContent = '₹' + budget.toFixed(2);
+        // Clear input after updating
+        budgetInput.value = '';
+    } else {
+        alert('Please enter a valid budget amount');
+    }
+});
+document.getElementById("goalAddBtn").addEventListener("click", function() {
+  var goalInput = document.getElementById("goalInput").value;
+  if (goalInput.trim() !== "") {
+    // Display the goal
+    displayGoal(goalInput);
+    // Clearing the input field after adding the goal
+    document.getElementById("goalInput").value = "";
+  } else {
+    alert("Please enter a valid goal!");
+  }
+});
+
+function displayGoal(goal) {
+  // Create a new div element to display the goal
+  var goalDiv = document.createElement("div");
+  goalDiv.textContent = "New Goal: " + goal;
+  // Append the goal div to the goalDisplay section
+  document.getElementById("goalDisplay").appendChild(goalDiv);
+}
+
